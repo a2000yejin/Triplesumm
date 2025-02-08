@@ -1,0 +1,54 @@
+video - False   Best Val F1 score 56.498 @ epoch0
+   Best Val MAP-50   0.63893 @ epoch0
+   Best Val MAP-15   0.32607 @ epoch0
+
+Testing on Model Summaries/CSTA/csta_mrhisum_visual_testing/best_f1score_model/best_f1.pkl
+Test F-score 55.88573880673565
+Test MAP50   0.6314174386012866
+Test MAP15   0.313838813452404
+
+Test WSE 21.14683442956618
+Test CIS 5.6198149101018355
+Test WIR 0.624032342889315
+Test IR 0.5431842869395055
+
+Testing on Model Summaries/CSTA/csta_mrhisum_visual_testing/best_mAP50_model/best_map50.pkl
+Test F-score 55.88573880673565
+Test MAP50   0.6314174386012866
+Test MAP15   0.313838813452404
+
+Test WSE 21.14683442956618
+Test CIS 5.6198149101018355
+Test WIR 0.624032342889315
+Test IR 0.5431842869395055
+
+Testing on Model Summaries/CSTA/csta_mrhisum_visual_testing/best_mAP15_model/best_map15.pkl
+Test F-score 55.88573880673565
+Test MAP50   0.6314174386012866
+Test MAP15   0.313838813452404
+
+Test WSE 21.14683442956618
+Test CIS 5.6198149101018355
+Test WIR 0.624032342889315
+Test IR 0.5431842869395055
+
+Testing on Model Summaries/CSTA/csta_mrhisum_visual_testing/best_srho_model/best_srho.pkl
+Test F-score 55.88573880673565
+Test MAP50   0.6314174386012866
+Test MAP15   0.313838813452404
+
+Test WSE 21.14683442956618
+Test CIS 5.6198149101018355
+Test WIR 0.624032342889315
+Test IR 0.5431842869395055
+
+Testing on Model Summaries/CSTA/csta_mrhisum_visual_testing/best_ktau_model/best_ktau.pkl
+Test F-score 55.88573880673565
+Test MAP50   0.6314174386012866
+Test MAP15   0.313838813452404
+
+Test WSE 21.14683442956618
+Test CIS 5.6198149101018355
+Test WIR 0.624032342889315
+Test IR 0.5431842869395055
+
