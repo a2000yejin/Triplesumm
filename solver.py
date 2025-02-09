@@ -70,7 +70,7 @@ class Solver(object):
             self.model = PGL_SUM(input_size=self.config.input_dim, output_size=1024, num_segments=4, heads=8, fusion="add", pos_enc="absolute")
             self.model.to(self.config.device)
             self.optimizer = optim.Adam(self.model.parameters(), lr=self.config.lr, weight_decay=self.config.l2_reg)
-            # self.scheduler = optim.lr_scheduler.ExponentialLR(self.optimizer, gamma=0.99)
+            # self.scheduler = optim.lr_scheduler.ExponentialLR(self.optimizer, gamma=self.config.gamma)
             self.scheduler = None
             self.init_weights(self.model, init_type='xavier')
         

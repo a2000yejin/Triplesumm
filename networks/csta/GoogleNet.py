@@ -185,8 +185,8 @@ class MaskedBatchNorm2d(nn.Module):
         #print(f"variance: {variance.shape}", flush=True) #torch.Size([1, channel, 1, 1])
 
         if self.training:
-            self.running_mean = ((1 - self.momentum) * self.running_mean.view(1, -1, 1, 1) + self.momentum * mean).squeeze()
-            self.running_var = ((1 - self.momentum) * self.running_var.view(1, -1, 1, 1) + self.momentum * variance).squeeze()
+            self.running_mean = ((1 - self.momentum) * self.running_mean.view(1, -1, 1, 1) + self.momentum * mean).view(-1)
+            self.running_var = ((1 - self.momentum) * self.running_var.view(1, -1, 1, 1) + self.momentum * variance).view(-1)
             self.num_batches_tracked += 1
         else:
             mean = self.running_mean

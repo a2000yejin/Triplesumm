@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=pgl_sum_mrhisum_visual_testing    # Submit a job named "example"
+#SBATCH --job-name=pgl_sum_mrhisum_visual_lr5e-5_bs256    # Submit a job named "example"
 #SBATCH --partition=a4000        # 계산노드 종류 선택: a6000 or a100
 #SBATCH --gres=gpu:1        # Use 0 GPU
 #SBATCH --time=14-00:00:00        # d-hh:mm:ss 형식, 본인 job의 max time limit 지정
 #SBATCH --mem=5G              # cpu memory size
 #SBATCH --cpus-per-task=4        # cpu 개수 (gpu당 최대 8개)
-#SBATCH --output=/home/yejin/data/projects/yejin/VideoSum/Triplesumm/slurm_log/pgl_sum/pgl_sum_mrhisum_visual_testing.out  # 스크립트 실행 결과 std output을 저장할 파일 이름
+#SBATCH --output=/home/yejin/data/projects/yejin/VideoSum/Triplesumm/slurm_log/train/pgl_sum/pgl_sum_mrhisum_visual_lr5e-5_bs256.out  # 스크립트 실행 결과 std output을 저장할 파일 이름
 #SBATCH --nodelist=node05        # 사용할 노드 이름
 
 cd /home/yejin/data/projects/yejin/VideoSum/Triplesumm
@@ -24,12 +24,11 @@ python main.py \
     --feature_path /home/yejin/data/dataset/MR.HiSum/feature_h5/video.h5 \
     --data_type video \
     --model PGL_SUM \
-    --batch_size 5 \
-    --epochs 1 \
+    --batch_size 256 \
+    --epochs 100 \
     --tag $SLURM_JOB_NAME \
-    --l2_reg 1e-7 \
+    --l2_reg 1e-4 \
     --lr 5e-5 \
-    --gamma 0.99 \
     --train_val False \
     --individual False \
     --save_results True \
