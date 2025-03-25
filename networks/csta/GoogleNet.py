@@ -411,8 +411,26 @@ class CSTA_GoogleNet(nn.Module):
         
         self.match_emb = nn.Linear(self.input_dim, 1024)
 
-    def forward(self, x, mask): 
-        #print(f"input x: {x.shape}", flush=True) #torch.Size([batch_size, channel=3, frame_num=max_len, emb_dim])
+    def forward(self, vis_feature, text_feature, audio_feature, mask, mix_type):
+        if mix_type == 'v':
+            x = vis_feature
+        elif mix_type == 't':
+            x = text_feature
+        elif mix_type == 'a':
+            x = audio_feature
+        elif mix_type == 'vt':
+            x = torch.cat((vis_feature, text_feature), dim = -1)
+        elif mix_type == 'va':
+            x = torch.cat((vis_feature, audio_feature), dim = -1)
+        elif mix_type == 'ta':
+            x = torch.cat((text_feature, audio_feature), dim = -1)
+        elif mix_type == 'vta':
+            x = torch.cat((vis_feature, text_feature, audio_feature), dim = -1)
+
+        x = x.unsqueeze(1)
+        x = x.expand(-1, 3, -1, -1)
+
+        #print(f"x in CSTA: {x.shape}") #torch.Size([batch_size, channel=3, frame_num, emb_dim])
         #print(f"input mask: {mask.shape}", flush=True) #torch.Size([batch_size, frame_num=max_len])
         #orig_mask = mask.clone()
 
@@ -451,7 +469,8 @@ class CSTA_GoogleNet(nn.Module):
             #print(f"mask after cls token: {mask.shape}", flush=True) # [batch_size, frame_num+1]
             CT_adjust = MaskedAdaptiveAvgPool((n_frame, self.dim))
         
-        #print(f"feature after cls token: {x.shape}", flush=True) #torch.Size([batch_size, channel=3, frame_num+1, 1024])
+        #print(f"x after cls token: {x.shape}", flush=True) #torch.Size([batch_size, channel=3, frame_num+1, 1024])
+        #print(f"mask after cls token: {mask.shape}", flush=True) #torch.Size([batch_size, frame_num+1])
         
         # Positional encoding (Transformer ways)
         if self.Positional_encoding_way=='Transformer':

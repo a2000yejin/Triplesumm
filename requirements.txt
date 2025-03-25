@@ -5,3 +5,4 @@ pandas==2.2.3
 tensorboard==2.18.0
 scikit-learn==1.6.1
 matplotlib==3.10.0
+ortools=9.11.4210

@@ -3,6 +3,9 @@ import argparse
 import torch
 import pprint
 
+from networks.csta import csta_build_config
+from networks.a2summ import A2Summ_build_config
+
 def str2bool(v):
     """ Transcode string to boolean.
 
@@ -67,3 +70,16 @@ class Config(object):
         config_str = 'Configurations\n'
         config_str += pprint.pformat(self.__dict__)
         return config_str
+    
+
+CONFIG_FACTORIES = {
+    "CSTA" : csta_build_config,
+    "PGL_SUM" : csta_build_config,
+    "A2Summ" : A2Summ_build_config,
+}
+
+def get_config(dataset_name):
+    if dataset_name in CONFIG_FACTORIES:
+        return CONFIG_FACTORIES[dataset_name]()
+    else:
+        raise ValueError(f"Unknown dataset: {dataset_name}")

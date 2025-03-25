@@ -25,6 +25,8 @@ def generate_summary(ypred, cps, n_frames, nfps, positions, proportion=0.15, met
     frame_scores = np.zeros((n_frames), dtype=np.float32)
     # if positions.dtype != int:
     #     positions = positions.astype(np.int32)
+    #print(f"ypred shape: {ypred.shape}") # torch.Size([batch_size = 1, n_frames])
+    #print(f"n_frames: {n_frames}, positions: {positions}") 
     if positions[-1] != n_frames:
         positions = np.concatenate([positions, [n_frames]])
     for i in range(len(positions) - 1):

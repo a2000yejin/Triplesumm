@@ -1,0 +1,54 @@
+video - False   Best Val F1 score 56.45 @ epoch22
+   Best Val MAP-50   0.63799 @ epoch25
+   Best Val MAP-15   0.30714 @ epoch31
+
+Testing on Model Summaries/PGL_SUM/pgl_sum_mrhisum_visual_lr5e-5_bs256/best_f1score_model/best_f1.pkl
+Test F-score 55.6946254018661
+Test MAP50   0.635546043729395
+Test MAP15   0.2933151281498698
+
+Test WSE 21.878683130871867
+Test CIS 5.6415568891895385
+Test WIR 0.6232587876578145
+Test IR 0.5460652346515235
+
+Testing on Model Summaries/PGL_SUM/pgl_sum_mrhisum_visual_lr5e-5_bs256/best_mAP50_model/best_map50.pkl
+Test F-score 55.653270711407366
+Test MAP50   0.6364661068576251
+Test MAP15   0.29746857149196626
+
+Test WSE 21.131644206255107
+Test CIS 5.566625277019237
+Test WIR 0.6369835158692052
+Test IR 0.554052926972339
+
+Testing on Model Summaries/PGL_SUM/pgl_sum_mrhisum_visual_lr5e-5_bs256/best_mAP15_model/best_map15.pkl
+Test F-score 55.23443364287702
+Test MAP50   0.6339465436638536
+Test MAP15   0.2992644730509365
+
+Test WSE 20.858356796751163
+Test CIS 5.535897130745594
+Test WIR 0.6458820025383061
+Test IR 0.559492121480594
+
+Testing on Model Summaries/PGL_SUM/pgl_sum_mrhisum_visual_lr5e-5_bs256/best_srho_model/best_srho.pkl
+Test F-score 55.25686606601755
+Test MAP50   0.6351593536042678
+Test MAP15   0.2950734776993364
+
+Test WSE 22.49276783978789
+Test CIS 5.701995340837296
+Test WIR 0.6256403454583961
+Test IR 0.5493529569314799
+
+Testing on Model Summaries/PGL_SUM/pgl_sum_mrhisum_visual_lr5e-5_bs256/best_ktau_model/best_ktau.pkl
+Test F-score 55.25686606601755
+Test MAP50   0.6351593536042678
+Test MAP15   0.2950734776993364
+
+Test WSE 22.49276783978789
+Test CIS 5.701995340837296
+Test WIR 0.6256403454583961
+Test IR 0.5493529569314799
+

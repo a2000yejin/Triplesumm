@@ -89,7 +89,7 @@ class MultiAttention(nn.Module):
 
 
 class PGL_SUM(nn.Module):
-    def __init__(self, input_size=1024, output_size=1024, freq=10000, pos_enc=None,
+    def __init__(self, input_dim=768, feature_size=1024, output_size=1024, freq=10000, pos_enc=None,
                  num_segments=None, heads=1, fusion=None):
         """ Class wrapping the PGL-SUM model; its key modules and parameters.
 
@@ -103,30 +103,54 @@ class PGL_SUM(nn.Module):
         """
         super(PGL_SUM, self).__init__()
 
-        self.attention = MultiAttention(input_size=input_size, output_size=output_size, freq=freq,
+        self.input_dim = input_dim
+        self.feature_size = feature_size
+        self.match_emb = nn.Linear(self.input_dim, self.feature_size)
+
+        self.attention = MultiAttention(input_size=self.feature_size, output_size=output_size, freq=freq,
                                         pos_enc=pos_enc, num_segments=num_segments, heads=heads, fusion=fusion)
-        self.linear_1 = nn.Linear(in_features=input_size, out_features=input_size)
+        self.linear_1 = nn.Linear(in_features=self.feature_size, out_features=self.feature_size)
         self.linear_2 = nn.Linear(in_features=self.linear_1.out_features, out_features=1)
 
         self.drop = nn.Dropout(p=0.5)
-        self.norm_y = nn.LayerNorm(normalized_shape=input_size, eps=1e-6)
+        self.norm_y = nn.LayerNorm(normalized_shape=self.feature_size, eps=1e-6)
         self.norm_linear = nn.LayerNorm(normalized_shape=self.linear_1.out_features, eps=1e-6)
         self.relu = nn.ReLU()
         self.sigmoid = nn.Sigmoid()
 
-    def forward(self, frame_features, mask=None):
+    def forward(self, vis_feature, text_feature, audio_feature, mask, mix_type):
         """ 
         :param torch.Tensor frame_features: Tensor of shape [BS, N, input_dim] containing the frame features
         """
         #print(f"frame features: {frame_features.shape}", flush=True) #[batch_size, frame_num, emb_dim]
         #print(f"mask: {mask.shape}", flush=True) #[batch_size, frame_num]
-
-        bs = frame_features.shape[0]
-        n = frame_features.shape[1]
-        dim = frame_features.shape[2]
+        if mix_type == 'v':
+            x = vis_feature
+        elif mix_type == 't':
+            x = text_feature
+        elif mix_type == 'a':
+            x = audio_feature
+        elif mix_type == 'vt':
+            x = torch.cat((vis_feature, text_feature), dim = -1)
+        elif mix_type == 'va':
+            x = torch.cat((vis_feature, audio_feature), dim = -1)
+        elif mix_type == 'ta':
+            x = torch.cat((text_feature, audio_feature), dim = -1)
+        elif mix_type == 'vta':
+            x = torch.cat((vis_feature, text_feature, audio_feature), dim = -1)
         
-        residual = frame_features
-        weighted_value, attn_weights = self.attention(frame_features, mask=mask)
+        bs, n, dim = x.shape
+        #print(f"Before projection: {x.shape}", flush=True) # [batch_size, n_frames, input_size]
+
+        if self.input_dim != self.feature_size:
+            x = self.match_emb(x.reshape(-1,self.input_dim))
+            x = x.view(bs, n, self.feature_size)
+            x = x * mask.unsqueeze(-1)
+        #print(f"After projection: {x.shape}", flush=True) # [batch_size, n_frames, dim=1024]
+        #print(f"Mask shape: {mask.shape}", flush=True) # [batch_size, n_frames]
+        
+        residual = x
+        weighted_value, attn_weights = self.attention(x, mask=mask)
         y = weighted_value + residual
         y = self.drop(y)
         y = self.norm_y(y)

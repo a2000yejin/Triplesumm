@@ -1,0 +1,23 @@
+Device being used: cuda:0
+{'device': 'cuda', 'model': 'A2Summ', 'epochs': 1, 'lr': 5e-05, 'weight_decay': '1e-7', 'batch_size': 32, 'tag': 'testing', 'ckpt_path': None, 'train': 'true', 'save_results': True, 'early_stop_by': 'None', 'tensorboard_path': '/home/yejin/data/projects/yejin/VideoSum/Triplesumm/tensorboard', 'seed': 12345, 'num_workers': 4, 'vis_feature_path': '/home/yejin/data/dataset/MR.HiSum/feature_h5/video.h5', 'text_feature_path': '/home/yejin/data/dataset/MR.HiSum/feature_h5/transcripts.h5', 'audio_feature_path': '/home/yejin/data/dataset/MR.HiSum/feature_h5/audio.h5', 'timestamp_data_path': '/home/yejin/data/dataset/MR.HiSum/feature_h5/timestamp.h5', 'gt_path': '/home/yejin/data/projects/yejin/VideoSum/Triplesumm/data/mrsum_with_features_gtsummary_modified.h5', 'split_file_path': '/home/yejin/data/projects/yejin/VideoSum/Triplesumm/data/custom_split.json', 'mix_type': 'vt', 'input_dim_vis': 768, 'input_dim_text': 768, 'num_hidden': 256, 'dropout_video': 0.1, 'dropout_text': 0.1, 'dropout_attn': 0.1, 'dropout_fc': 0.5, 'num_layers': 2, 'lambda_contrastive_inter': 0.0, 'lambda_contrastive_intra': 0.0, 'ratio': 4, 'save_dir_root': 'Summaries/A2Summ/testing', 'best_f1score_save_dir': 'Summaries/A2Summ/testing/best_f1score_model', 'best_map50_save_dir': 'Summaries/A2Summ/testing/best_mAP50_model', 'best_map15_save_dir': 'Summaries/A2Summ/testing/best_mAP15_model', 'best_srho_save_dir': 'Summaries/A2Summ/testing/best_srho_model', 'best_ktau_save_dir': 'Summaries/A2Summ/testing/best_ktau_model'}
+[Epoch: 0/1   ]
+  0%|          | 0/588 [00:00<?, ?it/s]<class 'tuple'> <class 'numpy.ndarray'>
+Error in batch collator
+  0%|          | 0/588 [00:08<?, ?it/s]
+Traceback (most recent call last):
+  File "/data/projects/yejin/VideoSum/Triplesumm/testing.py", line 116, in <module>
+    f1_save_ckpt_path, map50_save_ckpt_path, map15_save_ckpt_path, srho_save_ckpt_path, ktau_save_ckpt_path = a2summ_solver.train()
+  File "/data/projects/yejin/VideoSum/Triplesumm/networks/a2summ/solver.py", line 89, in train
+    data = next(iterator)
+  File "/home/yejin/.conda/envs/Triplesumm/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 701, in __next__
+    data = self._next_data()
+  File "/home/yejin/.conda/envs/Triplesumm/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 757, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/yejin/.conda/envs/Triplesumm/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 55, in fetch
+    return self.collate_fn(data)
+  File "/data/projects/yejin/VideoSum/Triplesumm/datasets.py", line 205, in __call__
+    mask = pad_sequence(mask, batch_first = True)
+  File "/home/yejin/.conda/envs/Triplesumm/lib/python3.10/site-packages/torch/nn/utils/rnn.py", line 478, in pad_sequence
+    return torch._C._nn.pad_sequence(
+RuntimeError: received an empty list of sequences
+It takes 16 seconds to complete this task.
